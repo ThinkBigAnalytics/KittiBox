@@ -1,0 +1,1 @@
+python demo.py --input_image /data/aisin_data/VDO_0371/vdo_0371_009.jpg --gpus 2 --output_image /data/KittiBox_out/vdo_0371_009.jpg

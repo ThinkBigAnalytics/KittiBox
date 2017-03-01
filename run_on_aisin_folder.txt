@@ -1,0 +1,4 @@
+for file in /data/github/SSD-Tensorflow/aisin_data/test/jpg/*
+do
+python demo.py --input_image $file --gpus 2
+done

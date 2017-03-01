@@ -47,9 +47,7 @@ flags = tf.app.flags
 FLAGS = flags.FLAGS
 
 sys.path.insert(1, 'incl')
-sys.path.insert(1, 'evals')
 from utils import train_utils as kittibox_utils
-import kitti_eval as kittibox_eval
 
 try:
     # Check whether setup was done correctly
@@ -165,7 +163,6 @@ def main(_):
                                                      pred_confidences],
                                                     feed_dict=feed)
 
-    
     # Apply non-maximal suppression
     # and draw predictions on the image
     output_image, rectangles = kittibox_utils.add_rectangles(
@@ -181,33 +178,28 @@ def main(_):
         if rect.score >= threshold:
             accepted_predictions.append(rect)
 
-#    print('')
-#    logging.info("{} Cars detected".format(len(accepted_predictions)))
+    print('')
+    logging.info("{} Cars detected".format(len(accepted_predictions)))
 
     # Printing coordinates of predicted rects.
-#    for i, rect in enumerate(accepted_predictions):
-#        logging.info("")
-#        logging.info("Coordinates of Box {}".format(i))
-#        logging.info("    x1: {}".format(rect.x1))
-#        logging.info("    x2: {}".format(rect.x2))
-#        logging.info("    y1: {}".format(rect.y1))
-#        logging.info("    y2: {}".format(rect.y2))
-#        logging.info("    Confidence: {}".format(rect.score))
-        
-    #kittibox_eval.write_rects_aisin(accepted_predictions, "/data/KittiBox_out/myresult.txt")
-    basename = os.path.basename(input_image)
-    kittibox_eval.write_rects_aisin(accepted_predictions, "/data/KittiBox_out/" + basename.split('.')[0] + ".txt")
-
+    for i, rect in enumerate(accepted_predictions):
+        logging.info("")
+        logging.info("Coordinates of Box {}".format(i))
+        logging.info("    x1: {}".format(rect.x1))
+        logging.info("    x2: {}".format(rect.x2))
+        logging.info("    y1: {}".format(rect.y1))
+        logging.info("    y2: {}".format(rect.y2))
+        logging.info("    Confidence: {}".format(rect.score))
 
     # save Image
-#    if FLAGS.output_image is None:
-#        output_name = input_image.split('.')[0] + '_rects.png'
-#    else:
-#        output_name = FLAGS.output_image
+    if FLAGS.output_image is None:
+        output_name = input_image.split('.')[0] + '_rects.png'
+    else:
+        output_name = FLAGS.output_image
 
-#    scp.misc.imsave(output_name, output_image)
-#    logging.info("")
-#    logging.info("Output image saved to {}".format(output_name))
+    scp.misc.imsave(output_name, output_image)
+    logging.info("")
+    logging.info("Output image saved to {}".format(output_name))
 
 
 if __name__ == '__main__':

@@ -51,6 +51,14 @@ def write_rects(rects, filename):
             print(string, file=f)
 
 
+def write_rects_aisin(rects, filename):
+    with open(filename, 'w') as f:
+        for rect in rects:
+            string = "Car %f %f %f %f %f" % \
+                (rect.score, rect.x1, rect.y1, rect.x2, rect.y2)
+            print(string, file=f)
+
+
 def evaluate(hypes, sess, image_pl, softmax):
     pred_annolist, true_annolist, image_list, dt, dt2 = get_results(hypes,
                                                                     sess,
